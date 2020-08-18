@@ -62,3 +62,14 @@ a {
 .material-icons:hover {
   cursor: pointer;
 }
+
+.collection-item:active {
+  color: red;
+}
+
+.collection a:hover {
+  background: red;
+}
+.collection a li:hover {
+  background: red;
+}

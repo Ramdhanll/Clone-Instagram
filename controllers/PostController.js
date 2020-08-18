@@ -2,7 +2,7 @@ const Post = require('../models/PostModel')
 
 
 const index = (req, res) => {
-  const posts = Post.find({})
+  Post.find({})
     // .populate({path : 'postedBy', model : 'User'}) opsi 1
     .populate('postedBy',"_id name") // opsi 2 | parameter kedua untuk menselect hanya field id dan name saja
     .populate('comments.postedBy',"_id name") // opsi 2 | parameter kedua untuk menselect hanya field id dan name saja
@@ -15,12 +15,14 @@ const index = (req, res) => {
 }
 
 const subscribePost = (req, res) => {
-  const posts = Post.find({"postedBy" : { $in : [req.user.following, req.user._id]}}) // ambil data post berdasarkan postedBy yang didalamnya ada data following
+  const query = [...req.user.following, req.user._id]
+  Post.find({"postedBy" : { $in : query}}) // ambil data post berdasarkan postedBy yang didalamnya ada data following
     // .populate({path : 'postedBy', model : 'User'}) opsi 1
     .populate('postedBy',"_id name") // opsi 2 | parameter kedua untuk menselect hanya field id dan name saja
     .populate('comments.postedBy',"_id name") // opsi 2 | parameter kedua untuk menselect hanya field id dan name saja
-    .sort({'created_at' : -1})
+    .sort('-created_at') // sort descending
     .then((posts) => {
+      console.log(posts)
       res.json({posts})
     }).catch((err) => {
       console.log(err)

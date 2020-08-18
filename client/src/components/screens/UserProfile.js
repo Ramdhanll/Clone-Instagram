@@ -21,7 +21,7 @@ function UserProfile() {
     }).catch((err) => {
       console.log(err)
     });
-  },[])
+  },[userId])
 
   const follow = () => {
     axios.put('/follow', {

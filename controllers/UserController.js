@@ -80,9 +80,23 @@ const updatePhoto = (req, res) => {
     })
 }
 
+const search = (req, res) => {
+  // let userPattern = new RegExp("^" + req.body.query) // pattern ^ untuk mencari yang match pada awal dan akhir, kalo di mysql = dhan%
+  let userPattern = new RegExp(req.body.query) // kalo di mysql = %dhan%
+
+  User.find({name : {$regex : userPattern, $options: 'i'}})
+  .select("_id name")
+  .then((user) => {
+    res.json({user : user})
+  }).catch((err) => {
+    console.log(err)
+  });
+}
+
 module.exports = {
   show,
   follow,
   unfollow,
-  updatePhoto
+  updatePhoto,
+  search
 }

@@ -3,12 +3,13 @@ const crypto = require('crypto')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {JWT_SECRET} = require('../config/keys')
+const {EMAIL} = require('../config/keys')
 const nodemailer = require('nodemailer')
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-      user: 'erdevlop@gmail.com',
-      pass: 'dhanigantengnomor1'
+      user: 'erdevtesting@gmail.com',
+      pass: 'negaraindonesia1'
   }
 });
 
@@ -19,7 +20,7 @@ const index = (req, res)  => {
 
 const mailOptions = (to, html) => {
   return {
-    from: 'erdevlop@gmail.com',
+    from: 'erdevtesting@gmail.com',
     to: to,
     subject: 'Signup Successfully',
     html: html
@@ -101,12 +102,12 @@ const resetPassword = (req, res) => {
       user.save()
       .then((result) => {
         transporter.sendMail({
-          from: 'erdevlop@gmail.com',
+          from: 'erdevtesting@gmail.com',
           to: result.email,
           subject: 'Reset Password',
           html: `
             <p>You request for password reset</p>
-            <h4>click this <a href="http://localhost:3000/reset-password/${token}">link</a> to reset password</h4>
+            <h4>click this <a href="${EMAIL}/reset-password/${token}">link</a> to reset password</h4>
           `
         });
         res.json({message : "check your email"})

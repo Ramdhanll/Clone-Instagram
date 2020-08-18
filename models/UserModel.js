@@ -13,6 +13,8 @@ const userSchema = new mongoose.Schema({
     type : String,
     required : true
   },
+  resetToken : String,
+  expireToken : Date,
   photo : {
     type : String,
     default : 'https://res.cloudinary.com/dzehd6loy/image/upload/v1597651172/noimahe_doplgp.png'
